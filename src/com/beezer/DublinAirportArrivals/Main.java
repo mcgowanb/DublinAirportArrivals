@@ -8,6 +8,7 @@ import java.util.Properties;
 public class Main {
 	
 	private static String test;
+	private static List<String> List;
 
 	public static void main(String args[]) throws IOException {
 		
@@ -19,9 +20,28 @@ public class Main {
 		
 		ParsingClass parser = new ParsingClass(config);
 		
-		List<String> testList = parser.process();
+		List = parser.process();
+		//debug();
+		//testPrint();
 		
 		
-
+		System.out.println("=====================END========================");
 	}
+	
+	
+	public static void debug(){
+		System.out.println("====================DEBUG=======================");
+		for (String x : List){
+			System.out.println(x);
+			
+		}
+		System.out.println("================END DEBUG=======================");
+	}
+	
+	public static void testPrint(){
+		System.out.println("====================TEST=======================");
+		System.out.println(List.get(List.size()-1));
+		System.out.println("================END TEST=======================");
+	}
+	
 }
