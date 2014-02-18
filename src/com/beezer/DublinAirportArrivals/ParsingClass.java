@@ -13,6 +13,7 @@ public class ParsingClass {
 	
 	public String url;
 	public String airline;
+	public String testArray[][]={{}};
 	
 	public ParsingClass(Properties config) throws IOException{
 		url = config.getProperty("url");
@@ -25,25 +26,14 @@ public class ParsingClass {
 		ArrayList<String> capture = new ArrayList<String>();
 		
 		Elements tableRows = doc.getElementsByTag("tr");
-		//Elements tableColumns = doc.getElementsByTag("td");
+		Elements tableCol = doc.getElementsByTag("td");
 		
 		for(Element tr: tableRows){
 			if(tr.text().contains(airline)){
-				capture.add(tr.tagName());
-				//System.out.println(tr.text());
-				System.out.println(tr.attr("src"));
+				capture.add(tr.text());
+				System.out.println(tr.text());
 				}
 			}
-		
-		for (Element e : doc.select("img")) {
-		    System.out.println(e.attr("src"));
-		}
-		
-		
-		
-		//System.out.println(tableRows);
-		
-		//create a loop and add the scrape to an array - should work
 		
 		return capture;
 	}
