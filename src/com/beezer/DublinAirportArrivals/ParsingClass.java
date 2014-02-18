@@ -32,7 +32,7 @@ public class ParsingClass {
 			System.out.println(tr.text());
 			}
 		
-		
+		//create a loop and add the scrape to an array - should work
 		
 		return capture;
 	}
