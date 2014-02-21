@@ -7,8 +7,8 @@ import java.util.Properties;
 
 public class Main {
 	
-	private static String test;
 	private static List<String> List;
+	private static String lastFlight;
 
 	public static void main(String args[]) throws IOException {
 		
@@ -21,9 +21,15 @@ public class Main {
 		ParsingClass parser = new ParsingClass(config);
 		
 		List = parser.process();
-		//debug();
-		//testPrint();
+		ParsingClass.lastFlight();
+		ParsingClass.splitStringToArray();
 		
+		//Ok. Parser works but it takes the last flight, which can be a future date. Needs to have data i the last row
+		
+
+		debug();
+	//	testPrint();
+	
 		
 		System.out.println("=====================END========================");
 	}
