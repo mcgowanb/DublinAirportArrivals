@@ -18,11 +18,11 @@ public class Main {
 		
 		System.out.println("====================BEGIN=======================");
 		
-		ParsingClass parser = new ParsingClass(config);
+		HtmlParser parser = new HtmlParser(config);
 		
 		List = parser.process();
-		ParsingClass.lastFlight();
-		ParsingClass.splitStringToArray();
+		HtmlParser.lastFlight();
+		//HtmlParser.splitStringToArray();
 		
 		//Ok. Parser works but it takes the last flight, which can be a future date. Needs to have data i the last row
 		
