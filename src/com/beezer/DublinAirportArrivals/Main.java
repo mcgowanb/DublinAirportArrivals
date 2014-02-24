@@ -21,7 +21,7 @@ public class Main {
 		HtmlParser parser = new HtmlParser(config);
 		
 		List = parser.process();
-		HtmlParser.lastFlight();
+		//HtmlParser.lastFlight();
 		//HtmlParser.splitStringToArray();
 		
 		//Ok. Parser works but it takes the last flight, which can be a future date. Needs to have data i the last row

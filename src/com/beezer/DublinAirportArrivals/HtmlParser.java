@@ -15,9 +15,9 @@ public class HtmlParser {
 	
 	public String url;
 	public String airline;
-	public static String testArray[][];
 	public static String lastFlight;
 	static ArrayList<String> capture = new ArrayList<String>();
+
 		
 	
 	public HtmlParser(Properties config) throws IOException{
@@ -34,16 +34,19 @@ public class HtmlParser {
 		
 		Elements tableRow = doc.getElementsByTag("tr");
 		Elements tableCol = doc.getElementsByTag("td");
+		int rowCount=0;
+		int colCount=0;
 		
 		
 		for(Element tr : tableRow){
 			if(tr.text().contains(airline)){
+				
 				capture.add(tr.text());
 			}
 		}
 		return capture;
 	}
-
+	
 	
 	public static void lastFlight() throws IOException{ 
 		
@@ -66,5 +69,23 @@ public class HtmlParser {
 		System.out.println(String.format(msg, args));
 		System.out.println("=====================END TEST===================");
 	}
+	
+	/*public ArrayList<String> process() throws IOException{
+		Document doc = Jsoup.connect(url).get();
+		
+		Elements tableRow = doc.getElementsByTag("tr");
+		Elements tableCol = doc.getElementsByTag("td");
+		int rowCount=0;
+		int colCount=0;
+		
+		
+		for(Element tr : tableRow){
+			if(tr.text().contains(airline)){
+				capture.add(tr.text());
+				testCount++;
+			}
+		}
+		return capture;
+	}*/
 
 }
