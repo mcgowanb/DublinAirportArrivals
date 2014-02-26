@@ -2,8 +2,6 @@ package com.beezer.DublinAirportArrivals;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Properties;
 
 import org.jsoup.Jsoup;
@@ -13,10 +11,11 @@ import org.jsoup.select.Elements;
 
 public class HtmlParser {
 	
-	public String url;
-	public String airline;
+	private String url;
+	private String airline;
 	public static String lastFlight;
-	static ArrayList<String> capture = new ArrayList<String>();
+	private String catcherA;
+	static ArrayList<ArrivalDetails> capture = new ArrayList<ArrivalDetails>();
 
 		
 	
@@ -24,68 +23,59 @@ public class HtmlParser {
 	
 		url = config.getProperty("url");
 		airline = config.getProperty("airline");
+		catcherA = config.getProperty("stringCatcher");
 		
 		print("Fetching.........%s" , url);
 		
 	}
 	
-	public ArrayList<String> process() throws IOException{
+	public ArrayList<ArrivalDetails> process() throws IOException{
 		Document doc = Jsoup.connect(url).get();
 		
 		Elements tableRow = doc.getElementsByTag("tr");
-		Elements tableCol = doc.getElementsByTag("td");
-		int rowCount=0;
-		int colCount=0;
-		
 		
 		for(Element tr : tableRow){
 			if(tr.text().contains(airline)){
-				
-				capture.add(tr.text());
+				if(tr.text().contains("Aer")){
+					String parsedString = tr.text();
+					
+					String origin = parsedString.substring(0, parsedString.indexOf(catcherA,1));
+					int charCounter = origin.length();
+					
+					String carrier = parsedString.substring(charCounter,(airline.length()+charCounter));
+					charCounter += carrier.length();
+					
+					String flightNo = parsedString.substring(charCounter,(charCounter+7));
+					charCounter += 7;
+					int parsedStringCount = parsedString.length();
+					int carrierLenght = carrier.length();
+					int flightLength = flightNo.length();
+					
+					
+					System.out.println("Origin: "+ origin+origin.length() + "\t\t" + carrier+carrier.length()+"\t"+flightNo+flightNo.length());
+					//System.out.println("Airline test is "+ carrier + " & Length is: "+airline.length());
+					//System.out.println("FlightNo: test is "+ flightNo + " & Length is: "+flightNo.length());
+					
+					//String delims = "[ ]+";
+					//String[] singleRowArray = tr.text().split(delims);
+					//ArrivalDetails temp = new ArrivalDetails(singleRowArray);
+					//capture.add(temp);
+					
+				}
 			}
+				
 		}
+	//	testPrint();
 		return capture;
 	}
 	
-	
-	public static void lastFlight() throws IOException{ 
-		
-		lastFlight = (capture.get(capture.size()-1));
-		print (lastFlight);	
+	public static void testPrint(){
+		System.out.println("====================TEST=======================");
+		System.out.println(capture.get(capture.size()-8));
+		System.out.println("================END TEST=======================");
 	}
-	
-	public static void splitStringToArray(){
-		String delims = "[ ]+";
-		String countArray[] = lastFlight.split(delims);
-		
-		for(int i=0; i < countArray.length;i++){
-			System.out.println(countArray[i]);
-		} 
-	}
-
 
 	public static void print(String msg, Object... args) {
-		System.out.println("=====================TEST======================");
 		System.out.println(String.format(msg, args));
-		System.out.println("=====================END TEST===================");
 	}
-	
-	/*public ArrayList<String> process() throws IOException{
-		Document doc = Jsoup.connect(url).get();
-		
-		Elements tableRow = doc.getElementsByTag("tr");
-		Elements tableCol = doc.getElementsByTag("td");
-		int rowCount=0;
-		int colCount=0;
-		
-		
-		for(Element tr : tableRow){
-			if(tr.text().contains(airline)){
-				capture.add(tr.text());
-				testCount++;
-			}
-		}
-		return capture;
-	}*/
-
 }

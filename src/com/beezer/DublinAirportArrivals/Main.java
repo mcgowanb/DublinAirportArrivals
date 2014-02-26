@@ -2,12 +2,13 @@ package com.beezer.DublinAirportArrivals;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
 public class Main {
 	
-	private static List<String> List;
+	private static ArrayList<ArrivalDetails> List;
 	private static String lastFlight;
 
 	public static void main(String args[]) throws IOException {
@@ -21,14 +22,13 @@ public class Main {
 		HtmlParser parser = new HtmlParser(config);
 		
 		List = parser.process();
-		//HtmlParser.lastFlight();
-		//HtmlParser.splitStringToArray();
+		
 		
 		//Ok. Parser works but it takes the last flight, which can be a future date. Needs to have data i the last row
 		
 
-		debug();
-	//	testPrint();
+	//	debug();
+	//    testPrint();
 	
 		
 		System.out.println("=====================END========================");
@@ -37,7 +37,7 @@ public class Main {
 	
 	public static void debug(){
 		System.out.println("====================DEBUG=======================");
-		for (String x : List){
+		for (ArrivalDetails x : List){
 			System.out.println(x);
 			
 		}
