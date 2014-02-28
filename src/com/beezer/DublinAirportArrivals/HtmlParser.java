@@ -25,47 +25,50 @@ public class HtmlParser {
 		airline = config.getProperty("airline");
 		catcherA = config.getProperty("stringCatcher");
 		
-		print("Fetching.........%s" , url);
+		print("Fetching........%s%s%s",airline," data from: ", url);
 		
 	}
 	
-	public ArrayList<ArrivalDetails> process() throws IOException{
-		Document doc = Jsoup.connect(url).get();
-		
+	public ArrayList<ArrivalDetails> process() throws IOException {
+		Document doc = Jsoup.connect(url).get(); 
 		Elements tableRow = doc.getElementsByTag("tr");
+		Element image = doc.select("img").first();
 		
-		for(Element tr : tableRow){
-			if(tr.text().contains(airline)){
-				if(tr.text().contains("Aer")){
-					String parsedString = tr.text();
-					
-					String origin = parsedString.substring(0, parsedString.indexOf(catcherA,1));
-					int charCounter = origin.length();
-					
-					String carrier = parsedString.substring(charCounter,(airline.length()+charCounter));
-					charCounter += carrier.length();
-					
-					String flightNo = parsedString.substring(charCounter,(charCounter+7));
-					charCounter += 7;
-					int parsedStringCount = parsedString.length();
-					int carrierLenght = carrier.length();
-					int flightLength = flightNo.length();
-					
-					
-					System.out.println("Origin: "+ origin+origin.length() + "\t\t" + carrier+carrier.length()+"\t"+flightNo+flightNo.length());
-					//System.out.println("Airline test is "+ carrier + " & Length is: "+airline.length());
-					//System.out.println("FlightNo: test is "+ flightNo + " & Length is: "+flightNo.length());
-					
-					//String delims = "[ ]+";
-					//String[] singleRowArray = tr.text().split(delims);
-					//ArrivalDetails temp = new ArrivalDetails(singleRowArray);
-					//capture.add(temp);
-					
-				}
-			}
+		for (Element tr : tableRow) {
+			if (tr.text().contains(airline)) {
 				
+				String terminal;
+			//	String url = image.attr("abs:src");
+			//	System.out.println("blah blah " + url);
+				
+				String scrapedText = tr.text();
+				String terminalCatcher = tr.outerHtml();
+				if(terminalCatcher.contains("images/t1.jpg")){
+					terminal = "T1";
+				}
+				else if(terminalCatcher.contains("images/t2.jpg")){
+					terminal = "T2";
+				}
+				else terminal = "Error";
+				
+				String origin = scrapedText.substring(0,
+						scrapedText.indexOf(catcherA, 1));
+				int charCounter = origin.length();
+
+				String carrier = scrapedText.substring(charCounter,
+						(airline.length() + charCounter));
+				charCounter += carrier.length();
+
+				String flightNo = scrapedText.substring(charCounter,
+						(charCounter + 7));
+				charCounter += 7;
+				System.out.println(terminal +" Origin: " + origin + origin.length()
+						+ "\t\t" + carrier + carrier.length() + "\t" + flightNo
+						+ flightNo.length());
+			}
+
 		}
-	//	testPrint();
+
 		return capture;
 	}
 	
