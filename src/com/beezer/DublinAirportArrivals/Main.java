@@ -8,7 +8,7 @@ import java.util.Properties;
 
 public class Main {
 	
-	private static ArrayList<ArrivalDetails> List;
+	private static ArrayList<ArrivalDetails> list;
 	private static String lastFlight;
 
 	public static void main(String args[]) throws IOException {
@@ -21,23 +21,16 @@ public class Main {
 		
 		HtmlParser parser = new HtmlParser(config);
 		
-		List = parser.process();
-		
-		
-		//Ok. Parser works but it takes the last flight, which can be a future date. Needs to have data i the last row
-		
-
+		list = parser.process();
 	//	debug();
-	//    testPrint();
-	
-		
+	    testPrint();
 		System.out.println("=====================END========================");
 	}
 	
 	
 	public static void debug(){
 		System.out.println("====================DEBUG=======================");
-		for (ArrivalDetails x : List){
+		for (ArrivalDetails x : list){
 			System.out.println(x);
 			
 		}
@@ -46,7 +39,7 @@ public class Main {
 	
 	public static void testPrint(){
 		System.out.println("====================TEST=======================");
-		System.out.println(List.get(List.size()-1));
+		System.out.println(list.get(list.size()-1));
 		System.out.println("================END TEST=======================");
 	}
 	
