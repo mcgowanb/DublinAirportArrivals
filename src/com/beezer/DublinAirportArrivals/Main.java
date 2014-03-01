@@ -3,13 +3,13 @@ package com.beezer.DublinAirportArrivals;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Properties;
+
 
 public class Main {
 	
 	private static ArrayList<ArrivalDetails> list;
-	private static String lastFlight;
+	public static String lastFlight;
 
 	public static void main(String args[]) throws IOException {
 		
@@ -20,10 +20,24 @@ public class Main {
 		System.out.println("====================BEGIN=======================");
 		
 		HtmlParser parser = new HtmlParser(config);
+		SaveOrUpdate saveOrUpdate = new SaveOrUpdate(config);
 		
 		list = parser.process();
-	//	debug();
-	    testPrint();
+		lastFlight = (list.get(list.size()-1)).toString();
+		print("Most recent flight to land from %s is:",parser.airline);
+		print(lastFlight);
+		
+		if(SaveOrUpdate.isTweetDuplicate() == false){
+			UpdateTwitter publisher = new UpdateTwitter(lastFlight);
+			publisher.initialize(config);
+			publisher.publish();	
+			saveOrUpdate.saveToFile();
+		}
+		else print("Most recent flight already posted to twitter, NFA");
+			
+		
+		
+		//debug();
 		System.out.println("=====================END========================");
 	}
 	
@@ -37,10 +51,8 @@ public class Main {
 		System.out.println("================END DEBUG=======================");
 	}
 	
-	public static void testPrint(){
-		System.out.println("====================TEST=======================");
-		System.out.println(list.get(list.size()-1));
-		System.out.println("================END TEST=======================");
+	public static void print(String msg, Object... args) {
+		System.out.println(String.format(msg, args));
 	}
 	
 }

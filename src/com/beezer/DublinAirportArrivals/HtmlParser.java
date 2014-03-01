@@ -12,7 +12,7 @@ import org.jsoup.select.Elements;
 public class HtmlParser {
 
 	private String url;
-	private String airline;
+	public static String airline;
 	public static String lastFlight;
 	private String charCatcher;
 	static ArrayList<ArrivalDetails> capture = new ArrayList<ArrivalDetails>();
@@ -24,7 +24,7 @@ public class HtmlParser {
 		airline = config.getProperty("airline");
 		charCatcher = config.getProperty("stringCatcher");
 
-		print("Fetching........%s%s%s", airline, " data from: ", url);
+		Main.print("Fetching........%s%s%s", airline, " data from: ", url);
 
 	}
 
@@ -69,7 +69,7 @@ public class HtmlParser {
 						scrapedText.length());
 				
 				stitcher[5] = scrapedText;
-				int i = stitcher[5].length();
+
 				if (stitcher[5].length() == 0){
 					stitcher[5] = null;
 				}
@@ -83,10 +83,6 @@ public class HtmlParser {
 		}
 
 		return capture;
-	}
-
-	public static void print(String msg, Object... args) {
-		System.out.println(String.format(msg, args));
 	}
 
 	private static String trim(String s, int begin, int end) {
