@@ -1,0 +1,13 @@
+#
+#Thu Feb 06 20:55:28 GMT 2014
+url=http://www.dublinairport.com/gns/flight-information/live-arrivals.aspx
+airline=Aer Lingus
+tweetlog=
+consolelog=
+oauth.accessToken=
+oauth.accessTokenSecret=
+oauth.consumerKey=
+oauth.consumerSecret=
+http.prettyDebug=true
+stringCatcher=A
+logFile=log/delta.log
